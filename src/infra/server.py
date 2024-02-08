@@ -33,8 +33,12 @@ class Server:
         self.socket.close()
 
     def on_new_client(self, client_socket: socket, address: tuple):
-        self.__client_sockets.append(client_socket)
         logger.info(f'New client {client_socket.getsockname()}')
+        self.__client_sockets.append(client_socket)
+
+        while True:
+            data = client_socket.recv(1024)
+            self.on_message(data.decode('utf'))
 
     # Method to handle new client connections
     def __wait_for_clients(self):
@@ -51,4 +55,4 @@ class Server:
         logger.info('Stopped listening for new connections.')
 
     def on_message(self, message):
-        pass
+        print(message)

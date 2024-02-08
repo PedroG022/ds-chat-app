@@ -7,17 +7,26 @@ logger = logging.getLogger(__name__)
 
 class Client:
     def __init__(self, host: str, port: int):
-        self.socket: socket = socket(AF_INET, SOCK_STREAM)
+        self.connection: socket = socket(AF_INET, SOCK_STREAM)
 
         self.host: str = host
         self.port: int = port
 
     def __handle_io(self):
+        while self.connection:
+            data = self.connection.recv(1024)
+            self.on_message(data.decode('utf-8'))
+
+    def on_message(self, message: str):
         pass
+
+    def send_message(self, message: str):
+        if self.connection:
+            self.connection.send(message.encode('utf-8'))
 
     def connect(self):
         try:
-            self.socket.connect((self.host, self.port))
+            self.connection.connect((self.host, self.port))
             logging.info('Connection established!')
 
             io_thread = threading.Thread(target=self.__handle_io)
@@ -28,7 +37,4 @@ class Client:
             logging.error('Connection error!')
 
     def disconnect(self):
-        pass
-
-    def on_message(self, message):
-        pass
+        self.connection.close()
