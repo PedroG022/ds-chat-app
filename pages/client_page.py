@@ -10,8 +10,9 @@ def main(page: ft.Page):
 
 
 def start(port: int, headless: bool = False):
-    ui_thread: Thread = Thread(target=lambda: ft.app(target=main))
-    ui_thread.start()
+    if not headless:
+        ui_thread: Thread = Thread(target=lambda: ft.app(target=main))
+        ui_thread.start()
 
     client_thread: Thread = Thread(target=__start_client, args=(port,))
     client_thread.start()
