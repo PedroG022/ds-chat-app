@@ -16,7 +16,7 @@ class MessageBubble(ft.UserControl):
             content=ft.Column(
                 spacing=0,
                 controls=[
-                    ft.Text(f'~{self.__sender}', size=12, weight=ft.FontWeight.W_600),
+                    ft.Text(f'{self.__sender}', size=12, weight=ft.FontWeight.W_600),
                     ft.Container(
                         ft.Text(self.__message),
                         margin=ft.margin.only(0, 8, 0, 0)
