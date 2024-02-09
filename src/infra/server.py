@@ -43,7 +43,12 @@ class Server:
 
     # Method that runs once a new client is connected
     def on_new_client(self, client_socket: socket, address: tuple):
-        identifier: ClientIdentifier = pickle.loads(client_socket.recv(1024))
+        identifier_str: str = pickle.loads(client_socket.recv(1024))
+        identifier: ClientIdentifier = ClientIdentifier(identifier_str)
+
+        identifier_dump: bytes = pickle.dumps(identifier)
+        client_socket.sendall(identifier_dump)
+
         logger.info(f'New client {address}: "{identifier.name}"')
 
         join_message: Message = Message(body=f'{identifier.name} JOINED THE CHAT', identifier=self.server_identifier)

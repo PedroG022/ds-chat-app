@@ -44,11 +44,14 @@ class Client:
             self.connection.connect((self.host, self.port))
             logging.info('Connection established!')
 
-            # Handle identification
-            identifier = ClientIdentifier(self.identifier)
-            identifier_dump = pickle.dumps(identifier)
-
+            # Identification handling
+            # Dump the client identifier string and send it to the server
+            identifier_dump = pickle.dumps(self.identifier)
             self.connection.sendall(identifier_dump)
+
+            # Receive the ClientIdentifier object from the server
+            client_identifier: ClientIdentifier = pickle.loads(self.connection.recv(1024))
+            logging.info(f'Received identifier: {client_identifier.client_id}')
 
             io_thread = threading.Thread(target=self.__handle_io)
             io_thread.start()
