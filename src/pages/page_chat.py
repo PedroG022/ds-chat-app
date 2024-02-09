@@ -38,9 +38,9 @@ class PageChat(Route):
     def body(self):
         port: int = self.page.session.get('port')
 
-        configure_window(self.page)
+        self.message_field: ft.TextField = ft.TextField(hint_text='Mensagem', expand=True,
+                                                        on_submit=lambda _: self.__send_message())
 
-        self.message_field: ft.TextField = ft.TextField(hint_text='Mensagem')
         self.send_button: ft.IconButton = ft.IconButton(ft.icons.SEND, width=50, height=50,
                                                         on_click=lambda _: self.__send_message())
 

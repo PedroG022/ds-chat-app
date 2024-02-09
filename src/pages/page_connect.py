@@ -20,7 +20,7 @@ class PageConnect(Route):
             },
         )
 
-        username_field = ft.TextField(label='Username')
+        username_field = ft.TextField(label='Username', on_submit=lambda _: self.__confirm_user(username_field.value))
         confirm_button = ft.ElevatedButton('Connect', expand=True, height=50, style=button_style,
                                            on_click=lambda _: self.__confirm_user(username_field.value))
 
