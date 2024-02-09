@@ -20,6 +20,9 @@ class Server:
         self.__server_shutdown: Event = Event()
         self.__client_sockets: dict[ClientIdentifier: socket] = {}
 
+        self.server_identifier: ClientIdentifier = ClientIdentifier('SERVER')
+        self.server_identifier.client_id = 'SERVER'
+
     # Method to start the server
     def start(self):
         self.socket.bind((self.host, self.port))
@@ -42,6 +45,9 @@ class Server:
     def on_new_client(self, client_socket: socket, address: tuple):
         identifier: ClientIdentifier = pickle.loads(client_socket.recv(1024))
         logger.info(f'New client {address}: "{identifier.name}"')
+
+        join_message: Message = Message(body=f'{identifier.name} JOINED THE CHAT', identifier=self.server_identifier)
+        self.__broadcast(join_message)
 
         self.__client_sockets[identifier] = client_socket
         self.__handle_client_messages(client_socket, identifier)
@@ -67,6 +73,10 @@ class Server:
                 if isinstance(exception, ConnectionResetError):
                     del self.__client_sockets[client_identifier]
                     logger.info(f'Client "{client_identifier.name}" disconnected')
+
+                    left_message: Message = Message(body=f'{client_identifier.name} LEFT THE CHAT',
+                                                    identifier=self.server_identifier)
+                    self.__broadcast(left_message)
                 elif not isinstance(exception, ConnectionAbortedError):
                     logger.error(f'Error while handling client message: {exception}')
                 break
