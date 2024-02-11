@@ -61,10 +61,14 @@ class Client:
 
             io_thread = threading.Thread(target=self.__handle_io)
             io_thread.start()
-        except ConnectionRefusedError:
+
+            return client_identifier
+        except ConnectionRefusedError as error:
             logging.error('Connection refused!')
-        except ConnectionError:
+            raise ConnectionRefusedError from error
+        except ConnectionError as error:
             logging.error('Connection error!')
+            raise ConnectionError from error
 
     # Disconnects from the server
     def disconnect(self):
