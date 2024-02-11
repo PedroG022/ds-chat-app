@@ -647,6 +647,17 @@ pil = ["pillow (>=9.1.0)"]
 test = ["coverage", "pytest"]
 
 [[package]]
+name = "random-username"
+version = "1.0.2"
+description = "Randomly generate compelling usernames."
+optional = false
+python-versions = "*"
+files = [
+    {file = "random-username-1.0.2.tar.gz", hash = "sha256:5fdc0604b5d1bdfe4acf4cd7491a9de1caf41bbdd890f646b434e09ae2a1b7ce"},
+    {file = "random_username-1.0.2-py3-none-any.whl", hash = "sha256:2536feb63fecde7e01ede4a541aadb6f0b58794a7ab327ca5369d2a4b7664c06"},
+]
+
+[[package]]
 name = "repath"
 version = "0.9.0"
 description = "Generate regular expressions form ExpressJS path patterns"
@@ -908,4 +919,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "2bad955b23d41fccb116e07f74faccc83a623e17f6930335993b993b79d774a0"
+content-hash = "fbc75d4346ffc15ceb8169725df2217c65d8ca8a28581c90905349d2515cb638"

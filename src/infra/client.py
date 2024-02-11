@@ -4,17 +4,23 @@ import threading
 from socket import socket, AF_INET, SOCK_STREAM
 from typing import Callable, Optional
 
+from random_username.generate import generate_username
+
 from src.entities import ClientIdentifier, Message
 
 logger = logging.getLogger(__name__)
 
 
 class Client:
-    def __init__(self, host: str, port: int, identifier: str):
+    def __init__(self, host: str, port: int, identifier: str = None):
         self.connection: socket = socket(AF_INET, SOCK_STREAM)
 
         self.host: str = host
         self.port: int = port
+
+        if not identifier:
+            logger.info('Client identifier is not present. Generating a random one...')
+            self.identifier: generate_username()[0]
 
         self.identifier: str = identifier
 
