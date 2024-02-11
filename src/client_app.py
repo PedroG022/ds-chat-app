@@ -1,7 +1,7 @@
 import flet as ft
 from fletrt import Router
 
-from src.pages import PageChat, PageConnect
+from src.pages import PageChat, PageConnect, PageError
 
 
 class ClientApp:
@@ -15,7 +15,8 @@ class ClientApp:
 
         router: Router = Router(page, routes={
             '/': PageConnect(),
-            '/chat': PageChat()
+            '/chat': PageChat(),
+            '/error': PageError()
         })
 
         router.install()
