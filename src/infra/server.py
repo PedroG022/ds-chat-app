@@ -1,5 +1,6 @@
 import logging
 import pickle
+from datetime import datetime
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread, Event
 
@@ -69,6 +70,10 @@ class Server:
 
                 # Sets the message identifier for the sender
                 message.identifier = client_identifier
+
+                # Set the message received date
+                message.date = datetime.now()
+
                 self.on_message_received(message)
             # Catches clients disconnections and other errors
             except Exception as exception:
