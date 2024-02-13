@@ -1,3 +1,4 @@
+from threading import Thread
 from typing import Optional
 
 import flet as ft
@@ -77,11 +78,14 @@ class PageChat(Route):
             )
         )
 
-        self.__start_client(self.port)
+        thread_start_client = Thread(target=self.__start_client, args=(self.port,))
+        thread_start_client.start()
+
         return container_root
 
     def __start_client(self, port: int):
         self.client: Client = Client('127.0.0.1', port, self.username)
+
         try:
             self.identifier = self.client.connect()
         except:
