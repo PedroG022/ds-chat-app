@@ -20,9 +20,6 @@ class Server:
         self.__server_shutdown: Event = Event()
         self.__client_sockets: dict[Identifier: socket] = {}
 
-        self.identifier: Identifier = Identifier('SERVER')
-        self.identifier.id = 'SERVER'
-
     # Method to start the server
     def start(self):
         self.__socket.bind(('127.0.0.1', self.__port))
@@ -85,7 +82,7 @@ class Server:
                 break
 
     # Broadcasts a message to all clients
-    def __broadcast(self, message: Message):
+    def broadcast(self, message: Message):
         for identifier in self.__client_sockets.keys():
             identifier: Identifier
 
@@ -115,18 +112,10 @@ class Server:
     # ===================
 
     def on_new_client(self, identifier: Identifier):
-        # join_message: Message = Message(body=f'{identifier.name} JOINED THE CHAT', identifier=self.identifier)
-        # self.__broadcast(join_message)
         pass
 
     def on_client_disconnect(self, identifier: Identifier):
-        # logger.info(f'Client "{identifier.name}" disconnected')
-        #
-        # left_message: Message = Message(body=f'{identifier.name} LEFT THE CHAT',
-        #                                 identifier=self.identifier)
-        # self.__broadcast(left_message)
         pass
 
     def on_message_received(self, message: Message):
-        # self.__broadcast(message)
         pass
