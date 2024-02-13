@@ -1,6 +1,6 @@
 import flet as ft
 
-from src.entities import Message
+from src.infra import Message
 
 
 class MessageBubble(ft.UserControl):
@@ -11,7 +11,7 @@ class MessageBubble(ft.UserControl):
         self.__owner = self.__message.identifier == self_identifier
 
     def build(self):
-        is_server = self.__message.identifier and self.__message.identifier.client_id == 'SERVER'
+        is_server = self.__message.identifier and self.__message.identifier.id == 'SERVER'
         bubble_color = ft.colors.BLUE_700
 
         if self.__owner:

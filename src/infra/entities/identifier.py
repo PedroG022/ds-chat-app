@@ -1,7 +1,7 @@
 import uuid
 
 
-class ClientIdentifier:
+class Identifier:
     def __init__(self, name: str):
-        self.client_id: uuid = uuid.uuid4()
+        self.id: uuid = uuid.uuid4()
         self.name: str = name

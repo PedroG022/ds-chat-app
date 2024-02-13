@@ -4,8 +4,7 @@ import flet as ft
 from fletrt import Route
 
 from src.controls import MessageBubble
-from src.entities import Message
-from src.infra import Client
+from src.infra import Client, Message
 
 
 class PageChat(Route):

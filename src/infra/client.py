@@ -6,7 +6,7 @@ from typing import Callable, Optional
 
 from random_username.generate import generate_username
 
-from src.entities import ClientIdentifier, Message
+from src.infra.entities import Identifier, Message
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +56,8 @@ class Client:
             self.connection.sendall(identifier_dump)
 
             # Receive the ClientIdentifier object from the server
-            client_identifier: ClientIdentifier = pickle.loads(self.connection.recv(1024))
-            logging.info(f'Received identifier: {client_identifier.client_id}')
+            client_identifier: Identifier = pickle.loads(self.connection.recv(1024))
+            logging.info(f'Received identifier: {client_identifier.id}')
 
             io_thread = threading.Thread(target=self.__handle_io)
             io_thread.start()
